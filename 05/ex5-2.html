@@ -26,6 +26,30 @@
             document.getElementById('result').innerHTML = "tweetしました";
             document.getElementById('tf2').value = '';
         }
+
+        function button2Pressed() {
+            doSelect();
+        }
+
+        async function doSelect() {
+            var searchWord = document.getElementById('word').value;
+            var sql = "select * from Tweets where tweet like '%" + searchWord + "%' order by time desc limit 20";
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.id + '</td>';
+                html = html + '<td>' + object.tweet + '</td>';
+                html = html + '<td>' + object.time + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('table').innerHTML = html;
+        }
     </script>
 
 </head>
@@ -33,12 +57,16 @@
 <body>
     <h1>Tweets</h1>
     <br>
+    <button onclick="button2Pressed()">X</button>
+    <input id="word" type="text">
+    <br>
     名前:<input id="tf1" value="名無し" type="textfield">
     <br>
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
     <br>
     <p id="result"></p>
+    <p id="table">xxxx</p>
 </body>
 
 </html>
