@@ -15,6 +15,10 @@
             doInsert();
         }
 
+        $().ready(function () {
+            setInterval(doSelect, 2000);
+        });
+
         async function doInsert() {
             var userid = document.getElementById('tf1').value;
             var tweet = document.getElementById('tf2').value;
