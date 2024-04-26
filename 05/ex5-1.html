@@ -21,13 +21,18 @@
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
-            html = html + '<ul>';
+            html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' + object.name + ',' + object.tweet + ',' + object.time + '</li>';
+                html = html + '<tr>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.id + '</td>';
+                html = html + '<td>' + object.tweet + '</td>';
+                html = html + '<td>' + object.time + '</td>';
+                html = html + '</tr>';
             }
-            html = html + '</ul>';
-            document.getElementById('result').innerHTML = html;
+            html = html + '</table>';
+            document.getElementById('table').innerHTML = html;
         }
     </script>
 
@@ -39,6 +44,7 @@
     <input id="word" type="text">
     <hr>
     <p id="result">xxxx</p>
+    <p id="table"></p>
 </body>
 
 </html>
