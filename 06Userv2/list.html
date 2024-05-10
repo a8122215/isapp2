@@ -26,6 +26,7 @@
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + '<a href="update.html?userid=' + object.id + '">変更</a>' + '</td>';
+                html = html + '<td>' + '<button onclick="newKesu(this.value)" class="button" value="' + object.id + '">削除</button>' + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -39,6 +40,26 @@
             console.log('sql' + sql);
             var object = await osql.connect(sql);
             console.log(object);
+            execSelect();
+        }
+
+        async function newKesu(id) {
+            var ans = window.confirm('本当にいいんですね？')
+            if (ans == true) {
+                var sql = 'delete from Users where id = "' + id + '"';
+                console.log('sql' + sql);
+                var object = await osql.connect(sql);
+                console.log(object);
+                execSelect();
+            }
+        }
+
+        document.querySelectorAll('.button').forEach(function (button) {
+            button.addEventListener('click', { value: `${button.value}`, handleEvent: onClickButton });
+        })
+
+        async function onClickButton(n) {
+            console.log(n + 'がクリックされました')
         }
     </script>
 
@@ -49,6 +70,8 @@
     <hr>
     ID:<input id="tf1" type="textfield"><button onclick="kesu()">削除</button>
     <hr>
+    <button onclick="onClickButton()" class="button" value="oj">test</button>
+    <button onclick="onClickButton(this.value)" class="button" value="1">1</button>
     <p id="result">xxxx</p>
 </body>
 
